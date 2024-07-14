@@ -1,9 +1,7 @@
 package BMclient;
 
 import BMlogic.Message;
-
 import BMlogic.Order;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -17,7 +15,7 @@ public class BMClientController {
         client = new Client(host, port);
     }
 
-    public boolean connectClientToServer() {
+    public boolean connectClientToServer(String host, int port) {
         try {
             client.openConnection();
             return true;
@@ -26,7 +24,6 @@ public class BMClientController {
             return false;
         }
     }
-
     public AbstractController getCurrentScreen() {
         return currentScreen;
     }
@@ -39,6 +36,7 @@ public class BMClientController {
         client.handleMessageFromClientUI(msg);
     }
 
+    // Implementing the getAllOrders method
     public List<Order> getAllOrders() {
         return client.fetchAllOrders();
     }

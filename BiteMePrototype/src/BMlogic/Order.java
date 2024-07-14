@@ -1,13 +1,13 @@
 package BMlogic;
 
 public class Order {
+
     private String restaurantName;
     private int orderNumber;
     private int totalPrice;
-    private int orderList;
+    private int orderListNum;
     private String orderAddress;
 
-    // Getters and setters
     public String getRestaurantName() {
         return restaurantName;
     }
@@ -33,11 +33,11 @@ public class Order {
     }
 
     public int getOrderList() {
-        return orderList;
+        return orderListNum;
     }
 
-    public void setOrderList(int orderList) {
-        this.orderList = orderList;
+    public void setOrderList(int orderListNum) {
+        this.orderListNum = orderListNum;
     }
 
     public String getOrderAddress() {
@@ -47,14 +47,13 @@ public class Order {
     public void setOrderAddress(String orderAddress) {
         this.orderAddress = orderAddress;
     }
-
     @Override
     public String toString() {
-        return "Order Details:"+" | " +
-               "Restaurant: " + restaurantName +" | "+ 
-               "Order Number: " + orderNumber +"| "+
-               "Total Price: " + totalPrice + " |"+
-               "Order List Number: " + orderList + " | "+ 
-               "Order Address: " + orderAddress;
+        return "Order Details: | Restaurant: " + restaurantName + 
+               " | Order Number: " + orderNumber + 
+               " | Total Price: " + totalPrice + 
+               " | Order List Number: " + orderListNum + 
+               " | Order Address: " + orderAddress;
     }
+    
 }

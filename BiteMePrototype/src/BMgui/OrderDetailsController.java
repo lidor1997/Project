@@ -12,12 +12,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 public class OrderDetailsController extends AbstractController {
 
     @FXML
-    private TextField txtOrderPK, txtTotalPrice, txtOrderAddress;
+    private TextField txtOrderPK;
+
+    @FXML
+    private TextField txtTotalPrice;
+
+    @FXML
+    private TextField txtOrderAddress;
 
     @FXML
     private TextArea txtOrderDetails;
@@ -60,7 +65,6 @@ public class OrderDetailsController extends AbstractController {
         colTotalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         colOrderList.setCellValueFactory(new PropertyValueFactory<>("orderList"));
         colOrderAddress.setCellValueFactory(new PropertyValueFactory<>("orderAddress"));
-      
     }
 
     @FXML
@@ -74,8 +78,6 @@ public class OrderDetailsController extends AbstractController {
         Order order = clientController.getOrder(Integer.parseInt(orderPK));
         if (order != null) {
             txtOrderDetails.setText(order.toString());
-            txtTotalPrice.setText(String.valueOf(order.getTotalPrice()));
-            txtOrderAddress.setText(order.getOrderAddress());
         } else {
             showAlert(Alert.AlertType.ERROR, "Order not found");
         }
@@ -97,26 +99,18 @@ public class OrderDetailsController extends AbstractController {
     @FXML
     private void updateOrderButtonClicked() {
         String orderPK = txtOrderPK.getText();
-        String totalPrice = txtTotalPrice.getText();
+        String totalPriceStr = txtTotalPrice.getText();
         String orderAddress = txtOrderAddress.getText();
 
-        if (orderPK.trim().isEmpty() || totalPrice.trim().isEmpty() || orderAddress.trim().isEmpty()) {
+        if (orderPK.trim().isEmpty() || totalPriceStr.trim().isEmpty() || orderAddress.trim().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "You must enter a valid order primary key, total price, and order address");
             return;
         }
 
-        try {
-            int orderNumber = Integer.parseInt(orderPK);
-            int price = Integer.parseInt(totalPrice);
-
-            clientController.updateOrder(orderNumber, price, orderAddress);
-            showAlert(Alert.AlertType.INFORMATION, "Update request sent.");
-
-            // Optionally fetch and update the table view to reflect changes
-            fetchAllOrdersButtonClicked();
-        } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Total price and order number must be valid numbers");
-        }
+        int orderPKInt = Integer.parseInt(orderPK);
+        int totalPrice = Integer.parseInt(totalPriceStr);
+        clientController.updateOrder(orderPKInt, totalPrice, orderAddress);
+        showAlert(Alert.AlertType.INFORMATION, "Order updated successfully");
     }
 
     protected void showAlert(Alert.AlertType type, String message) {

@@ -1,6 +1,6 @@
 package BMserver;
-import java.sql.Connection;
 
+import java.sql.Connection;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -36,8 +36,7 @@ public class DBConnector {
         }
     }
 
-   
-
+    // Fetch all orders from the database
     public List<Order> getOrders() {
         if (conn == null) {
             System.out.println("Database connection is not established");
@@ -64,13 +63,14 @@ public class DBConnector {
         return orders;
     }
 
+    // Fetch a specific order by primary key from the database
     public Order getOrder(int orderNumber) {
         if (conn == null) {
             System.out.println("Database connection is not established");
             return null;
         }
 
-        String query = "SELECT * FROM orders WHERE order_number = ?";
+        String query = "SELECT * FROM orders WHERE Order_number = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, orderNumber);
             ResultSet rs = pstmt.executeQuery();
@@ -89,6 +89,26 @@ public class DBConnector {
         return null;
     }
 
+    // Update an order in the database
+    public boolean updateOrder(int orderNumber, int totalPrice, String orderAddress) {
+        if (conn == null) {
+            System.out.println("Database connection is not established");
+            return false;
+        }
+
+        String query = "UPDATE orders SET Total_price = ?, Order_address = ? WHERE Order_number = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, totalPrice);
+            pstmt.setString(2, orderAddress);
+            pstmt.setInt(3, orderNumber);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void closeConnection() {
         try {
             if (conn != null && !conn.isClosed()) {
@@ -99,21 +119,5 @@ public class DBConnector {
             System.out.println("Failed to close connection: " + ex.getMessage());
         }
     }
-    public boolean updateOrder(int orderNumber, int totalPrice, String orderAddress) {
-        String query = "UPDATE orders SET total_price = ?, order_address = ? WHERE order_number = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, totalPrice);
-            pstmt.setString(2, orderAddress);
-            pstmt.setInt(3, orderNumber);
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-   
-    
 }
-
 

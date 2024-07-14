@@ -1,0 +1,13 @@
+/.classpath
+/.project
+/BMclient/
+/BMgui/
+/BMlogic/
+/BMserver/
+/OCSF.iml
+/axisclient.properties
+/axisservice.properties
+/bin/
+/module-info.class
+/src/
+/wsgen.xml

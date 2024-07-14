@@ -21,7 +21,16 @@ public class BMClientUI extends Application {
         clientConnectionController.start(primaryStage);
     }
 
- 
- 
+    /**
+     * @param host - host address of the server
+     * @param port - port number of the server
+     *
+     * The method creates a client instance, only once
+     */
+    public static void createClient(String host, int port) {
+        if (client == null) {
+            client = new BMClientController(host, port);
+        }
+    }
 }
 

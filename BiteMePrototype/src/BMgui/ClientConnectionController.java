@@ -31,7 +31,7 @@ public class ClientConnectionController extends AbstractController {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("BiteMe Login");
+        primaryStage.setTitle("Client Connection");
         primaryStage.show();
     }
 
@@ -53,7 +53,7 @@ public class ClientConnectionController extends AbstractController {
             showAlert(Alert.AlertType.ERROR, "Port number must be in range (1024-65535)");
         } else {
             clientController = new BMClientController(serverAddress, Integer.parseInt(port));
-            boolean connected = clientController.connectClientToServer();
+            boolean connected = clientController.connectClientToServer(serverAddress, Integer.parseInt(port));
             if (connected) {
                 showAlert(Alert.AlertType.INFORMATION, "Connected to server successfully");
                 showOrderDetailsScreen((Stage) btnConnect.getScene().getWindow());

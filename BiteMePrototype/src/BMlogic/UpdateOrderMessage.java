@@ -1,16 +1,15 @@
 package BMlogic;
 
 import java.io.Serializable;
-
-import BMlogic.Message;
+import java.util.ArrayList;
 
 public class UpdateOrderMessage extends Message implements Serializable {
     private int orderNumber;
     private int totalPrice;
     private String orderAddress;
 
-    public UpdateOrderMessage(int orderNumber, int totalPrice, String orderAddress) {
-        super("Update Order", null); // Call the superclass constructor with appropriate values
+    public UpdateOrderMessage(String message, ArrayList<Order> orders, int orderNumber, int totalPrice, String orderAddress) {
+        super(message, orders);
         this.orderNumber = orderNumber;
         this.totalPrice = totalPrice;
         this.orderAddress = orderAddress;
